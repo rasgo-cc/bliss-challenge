@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ShareService } from '../share.service';
 import { Router } from '@angular/router';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
@@ -10,7 +10,9 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
 })
 export class ShareComponent implements OnInit {
 
+  modalVisible = false;
   destinationEmail: string;
+  @Input() urlToShare: string;
 
   constructor(
     private shareService: ShareService,
@@ -22,12 +24,20 @@ export class ShareComponent implements OnInit {
 
   }
 
-  share(): void {
-    const url = 'http://localhost:4200' + this.router.url;
-    console.log('share', url);
-    this.shareService.share(this.destinationEmail, url)
+  showModal(): void {
+    this.modalVisible = true;
+  }
+  hideModal(): void {
+    this.modalVisible = false;
+  }
+
+  share(event: any): void {
+    event.target.textContent = 'Sending...';
+    this.shareService.share(this.destinationEmail, this.urlToShare)
                      .subscribe(obj => {
-                        console.log('shared', obj);
+                        if(obj['status'] == "OK") {
+                          this.hideModal();
+                        }
                      })
   }
 

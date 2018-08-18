@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'bliss-challenge';
+  public domain = 'http://localhost:4200/';
 }

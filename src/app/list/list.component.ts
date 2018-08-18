@@ -4,6 +4,7 @@ import { QuestionService } from '../question.service';
 import { Question } from '../question';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { environment as env } from '../../environments/environment';
 
 @Component({
   selector: 'app-list',
@@ -13,11 +14,12 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 export class ListComponent implements OnInit {
 
   questions: Question[];
-  private searchTerms = new Subject<string>();
+  searchTerms = new Subject<string>();
   resultsInfo = {
     offset: 0,
     lastTerm: "",
   };
+  shareableUrl: string;
 
   searching: boolean;
   loading: boolean;
@@ -31,11 +33,18 @@ export class ListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.searchTerms.pipe(
       debounceTime(200),
       distinctUntilChanged(),
       switchMap((term: string) => {
+        let urlToShare = env.domain + this.router.url;
+        if(urlToShare.indexOf('?') !== -1) {
+          urlToShare = urlToShare.split('?')[0];
+        }
+        if(term != "") {
+          urlToShare +='?question_filter='+ term;
+        }
+        this.shareableUrl = urlToShare;
         return this.questionService.search(term)
       }),
     ).subscribe(questions => {
@@ -44,7 +53,6 @@ export class ListComponent implements OnInit {
     });
 
     this.route.queryParams.subscribe(params => {
-      console.log('params', params);
 
       let firstTermToSearch = "";
 
@@ -53,13 +61,12 @@ export class ListComponent implements OnInit {
         this.searchBox.nativeElement.focus();
       }
       else if('question_id' in params) {
-        // goto details
+        this.router.navigate(['detail', params['question_id']]);
       }
 
       this.search(firstTermToSearch);
+      this.shareableUrl = this.router.url;
     });
-
-
   }
 
   search(term = ""): void {

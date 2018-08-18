@@ -11,11 +11,13 @@
     <ul class='choices'>
       <li *ngFor="let choice of question.choices" class='choice'>
         <div class='name'>{{ choice.choice }}</div>
-        <button class='vote-btn' (click)="vote(choice.choice)" [disabled]='votingAllowed === false'>Vote</button>
+        <button class='vote-btn'
+          (click)="vote(choice.choice, $event)"
+          [disabled]='votingAllowed === false'>Vote</button>
         <div class='votes'>{{ choice.votes }}</div>
       </li>
     </ul>
   </div>
   <button (click)='goBack()'>Go Back</button>
-  <app-share></app-share>
+  <app-share [urlToShare]='shareableUrl'></app-share>
 </div>

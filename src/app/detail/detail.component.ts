@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Question } from '../question';
 import { QuestionService } from '../question.service';
+import { environment as env } from '../../environments/environment';
 
 @Component({
   selector: 'app-detail',
@@ -14,30 +15,38 @@ export class DetailComponent implements OnInit {
 
   question: Question;
   votingAllowed = true;
+  shareableUrl: string;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private questionService: QuestionService,
     private location: Location
   ) { }
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
-    console.log('getting id', id);
     this.questionService.getQuestion(id)
                         .subscribe(question => this.question = question);
+    this.shareableUrl = env.domain + '/questions?question_id=' + id;
   }
 
-  vote(choice: string): void {
-    console.log('vote', choice);
+  vote(choice: string, event: any): void {
     let i = this.question.choices.findIndex( el => {
       return el.choice === choice;
     });
     this.question.choices[i].votes += 1;
     this.votingAllowed = false;
+    event.target.classList.add('voted');
   }
 
   goBack() {
-    this.location.back();
+    console.log('ref', document.referrer);
+    if(document.referrer != env.domain + this.router.url) {
+      this.location.back();
+    }
+    else {
+      this.router.navigate(['questions']);
+    }
   }
 }

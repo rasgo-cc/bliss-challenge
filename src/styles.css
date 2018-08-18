@@ -85,6 +85,14 @@ button:disabled {
   border-color: #aaa;
 }
 
+input {
+  font-size: 1rem;
+  outline: none;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -93,4 +101,8 @@ ul {
 img {
   max-width: 100%;
   height: auto;
+}
+
+.text-right {
+  text-align: right;
 }

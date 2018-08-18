@@ -1,5 +1,15 @@
-<button (click)='share()'>Share  <i class='fa fa-paper-plane'></i></button>
-<div *ngIf='sharing'>
-    <input #emailBox type="text" [(ngModel)]='destinationEmail' placeholder="Email">
+<button (click)='showModal()'>Share
+  <i class='fa fa-paper-plane'></i>
+</button>
+<div *ngIf='modalVisible' class='share'>
+  <div class='share-modal'>
+    <button class='close' (click)="hideModal()">×</button>
+    <h2>Sharing is caring</h2>
+    <p><a href='{{ urlToShare }}' target='_blank'>{{ urlToShare }}</a></p>
+    <p>Enter the email of the person you want to share this link with.</p>
+    <div class='text-right'>
+      <input #emailBox type="text" [(ngModel)]='destinationEmail' placeholder="Email">
+      <button (click)="share($event)" [disabled]="emailBox.value == ''">Share</button>
+    </div>
+  </div>
 </div>
-

@@ -12,3 +12,8 @@
   color: #aaa;
 }
 
+.voted {
+  background: #4953ff;
+  border-color: #4953ff;
+  color: white;
+}

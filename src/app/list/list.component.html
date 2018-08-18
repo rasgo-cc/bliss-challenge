@@ -17,7 +17,7 @@
     </li>
   </ul>
   <button *ngIf='questions.length' (click)="loadMore()">Load More</button>
-  <app-share *ngIf='questions.length'></app-share>
+  <app-share *ngIf='questions.length' [urlToShare]='shareableUrl'></app-share>
   <div *ngIf='loading' class='loader'></div>
   <div>
 
