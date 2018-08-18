@@ -13,6 +13,7 @@ import { QuestionService } from '../question.service';
 export class DetailComponent implements OnInit {
 
   question: Question;
+  votingAllowed = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,6 +26,15 @@ export class DetailComponent implements OnInit {
     console.log('getting id', id);
     this.questionService.getQuestion(id)
                         .subscribe(question => this.question = question);
+  }
+
+  vote(choice: string): void {
+    console.log('vote', choice);
+    let i = this.question.choices.findIndex( el => {
+      return el.choice === choice;
+    });
+    this.question.choices[i].votes += 1;
+    this.votingAllowed = false;
   }
 
   goBack() {

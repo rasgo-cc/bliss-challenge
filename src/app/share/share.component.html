@@ -1,2 +1,5 @@
-<input #emailBox type="text" [(ngModel)]='destinationEmail' placeholder="Email">
-<button (click)='share()'>Share this</button>
+<button (click)='share()'>Share  <i class='fa fa-paper-plane'></i></button>
+<div *ngIf='sharing'>
+    <input #emailBox type="text" [(ngModel)]='destinationEmail' placeholder="Email">
+</div>
+

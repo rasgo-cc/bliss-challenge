@@ -3,7 +3,6 @@
   display: inline-block;
   border: 1px solid black;
   padding: 10px 6px;
-
   margin: 0 auto;
   text-align: left;
 }
@@ -27,4 +26,20 @@
 
 .clear:hover {
   color: red;
+}
+
+.question {
+  padding: 3px;
+}
+
+.qid {
+  display: inline-block;
+  min-width: 30px;
+  text-align: left;
+  padding: 0 3px;
+}
+
+.published_at {
+  color: #aaa;
+  padding: 0 3px;
 }

@@ -1,0 +1,14 @@
+.choice {
+  display: inline-block;
+  width: auto;
+  padding: 10px;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.votes {
+  color: #aaa;
+}
+

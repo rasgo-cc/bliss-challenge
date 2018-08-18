@@ -1,13 +1,21 @@
-<div *ngIf='question'>
-  <h2>{{ question.question }}</h2>
-  <div>
-    <span>id: </span> {{ question.id }}
+<div class='container'>
+  <h1>Question's Details</h1>
+  <div *ngIf='!question' class='loader'></div>
+  <div *ngIf='question'>
+    <h2>{{ question.id }} / {{ question.question }}</h2>
+    <img src='{{ question.image_url }}'>
+    <div>
+
+    </div>
+    <p>Cast your vote in one of these options:</p>
+    <ul class='choices'>
+      <li *ngFor="let choice of question.choices" class='choice'>
+        <div class='name'>{{ choice.choice }}</div>
+        <button class='vote-btn' (click)="vote(choice.choice)" [disabled]='votingAllowed === false'>Vote</button>
+        <div class='votes'>{{ choice.votes }}</div>
+      </li>
+    </ul>
   </div>
-  <ul>
-    <li *ngFor="let choice of question.choices">
-      <span>{{ choice.choice }}</span> <button>Vote</button> {{ choice.votes }}
-    </li>
-  </ul>
+  <button (click)='goBack()'>Go Back</button>
+  <app-share></app-share>
 </div>
-<app-share></app-share>
-<button (click)='goBack()'>Go back</button>

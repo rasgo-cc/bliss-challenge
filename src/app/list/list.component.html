@@ -5,11 +5,21 @@
       class=''>
     <button *ngIf='searchBox.value != ""' (click)="searchBox.value='';search()" class='clear'>×</button>
   </div>
+  <div *ngIf='searching' class='loader'></div>
   <ul class="questions">
-    <li *ngFor="let question of questions">
-      {{question.id}}
-      <a routerLink="/detail/{{question.id}}">{{question.question}}</a>
+    <li *ngFor="let question of questions" class='question'>
+      <span class='qid'>{{question.id}}</span>
+      <span class='published_at'>{{question.published_at | date}}</span>
+      <a routerLink='/detail/{{question.id}}'>
+        {{ question.question }}
+      </a>
+
     </li>
   </ul>
-  <button (click)="loadMore()">Load more</button>
+  <button *ngIf='questions.length' (click)="loadMore()">Load More</button>
+  <app-share *ngIf='questions.length'></app-share>
+  <div *ngIf='loading' class='loader'></div>
+  <div>
+
+</div>
 </div>
