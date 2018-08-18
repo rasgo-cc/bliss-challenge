@@ -1,9 +1,9 @@
-<div class='loadings'>
+<div class='container'>
   <h1>Loading</h1>
-  <span class='loader'></span>
+  <div *ngIf="!health" class='loader'></div>
   <div *ngIf="health">
     <div *ngIf="health.status !== 'OK'">
-        <span>{{health.status}}</span>
+      <div>{{health.status}}</div>
       <button (click)="getStatus()">Retry</button>
     </div>
   </div>

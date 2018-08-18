@@ -1,0 +1,30 @@
+.search {
+  position: relative;
+  display: inline-block;
+  border: 1px solid black;
+  padding: 10px 6px;
+
+  margin: 0 auto;
+  text-align: left;
+}
+
+.search input {
+  font-size: 1rem;
+  outline: none;
+  border: none;
+  width: 100%;
+}
+
+.clear {
+  position: absolute;
+  background: transparent;
+  color: black;
+  border: none;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.clear:hover {
+  color: red;
+}
