@@ -14,6 +14,10 @@ export class ListComponent implements OnInit {
 
   questions: Question[];
   private searchTerms = new Subject<string>();
+  resultsInfo = {
+    offset: 0,
+    lastTerm: "",
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -22,41 +26,49 @@ export class ListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.searchTerms.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      switchMap((term: string) => {
+        return this.questionService.search(term)
+      }),
+    ).subscribe(questions => {
+      this.questions = questions;
+    });
+
     this.route.queryParams.subscribe(params => {
       console.log('params', params);
 
+      let firstTermToSearch = "";
+
       if('question_filter' in params) {
-        console.log('search!');
+        firstTermToSearch = params['question_filter'];
       }
       else if('question_id' in params) {
-
+        // goto details
       }
-      else {
-        this.getQuestions();
-      }
-    });
 
-    this.searchTerms.pipe(
-      debounceTime(100),
-      distinctUntilChanged(),
-      switchMap((term: string) => this.questionService.search(term)),
-    ).subscribe(questions => {
-      console.log('searched', questions);
-      this.questions = questions;
+      this.search(firstTermToSearch);
     });
   }
 
-  search(term: string): void {
-    console.log('search', term);
+  search(term = ""): void {
+    // Because the mock API always retrieves the same questions, let's
+    // clear all the current ones first for a better UX
     this.questions = new Array<Question>();
+    this.resultsInfo.lastTerm = term;
+    this.resultsInfo.offset = 0;
     this.searchTerms.next(term);
   }
 
-  getQuestions(): void {
-    this.questionService.getQuestions().subscribe(questions => {
-      this.questions = questions;
-      console.log('questions', questions);
-    });
+  loadMore(): void {
+    this.resultsInfo.offset += this.questionService.defaultLimit;
+    this.questionService.search(this.resultsInfo.lastTerm,
+                                this.resultsInfo.offset)
+                        .subscribe(questions => {
+                          this.questions = this.questions.concat(questions);
+                        });
   }
 
 }

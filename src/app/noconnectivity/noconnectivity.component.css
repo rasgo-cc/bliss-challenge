@@ -1,13 +1,16 @@
-.loading {
-  position: fixed;
+.offline {
   display: flex;
   justify-content: center;
   text-align: center;
   flex-direction: column;
   opacity: 0.5;
+  background: #aa0000;
+  color: white;
   width: 100%;
   height: 100%;
+  z-index: 10;
   top: 0;
   left: 0;
+  position: fixed;
 }
 

@@ -24,11 +24,12 @@ export class LoadingComponent implements OnInit {
   getStatus(): void {
     this.health = null;
     this.healthService.getStatus().subscribe(health => {
+      health.status = 'Service unnavailable.';
       this.health = health;
 
       if(this.health.status === 'OK') {
         console.log(health, 'show me the list!');
-        this.router.navigate(['questions']);
+        //this.router.navigate(['questions']);
       }
     });
   }

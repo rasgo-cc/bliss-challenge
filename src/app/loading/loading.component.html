@@ -1,5 +1,10 @@
-<h1>Loading...</h1>
-<div *ngIf="health">
-  <span>{{health.status}}</span>
-  <button (click)="getStatus()">Retry</button>
+<div class='loadings'>
+  <h1>Loading</h1>
+  <span class='loader'></span>
+  <div *ngIf="health">
+    <div *ngIf="health.status !== 'OK'">
+        <span>{{health.status}}</span>
+      <button (click)="getStatus()">Retry</button>
+    </div>
+  </div>
 </div>

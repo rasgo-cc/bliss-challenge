@@ -1,3 +1,13 @@
-<p>
-  detail works!
-</p>
+<div *ngIf='question'>
+  <h2>{{ question.question }}</h2>
+  <div>
+    <span>id: </span> {{ question.id }}
+  </div>
+  <ul>
+    <li *ngFor="let choice of question.choices">
+      <span>{{ choice.choice }}</span> <button>Vote</button> {{ choice.votes }}
+    </li>
+  </ul>
+</div>
+<app-share></app-share>
+<button (click)='goBack()'>Go back</button>

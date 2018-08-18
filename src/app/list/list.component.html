@@ -1,8 +1,10 @@
 <h1>Questions</h1>
-<input type="text" placeholder="Search..."
-  (input)="search($event.target.value)">
+<input #searchBox type="text" [(ngModel)]="resultsInfo.lastTerm" placeholder="Search..."
+  (input)="search(searchBox.value)">
+  <button *ngIf='searchBox.value != ""' (click)="searchBox.value='';search()">Clear</button>
 <ul class="questions">
   <li *ngFor="let question of questions">
-    {{question.id}} <span>{{question.question}}</span>
+    {{question.id}} <a routerLink="/detail/{{question.id}}">{{question.question}}</a>
   </li>
 </ul>
+<button (click)="loadMore()">Load more</button>

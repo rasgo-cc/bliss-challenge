@@ -9,6 +9,7 @@ import { ShareComponent } from './share/share.component';
 const routes: Routes = [
   { path: '', component: LoadingComponent },
   { path: 'questions', component: ListComponent },
+  { path: 'detail/:id', component: DetailComponent },
 ];
 
 @NgModule({
