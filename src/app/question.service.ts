@@ -27,4 +27,9 @@ export class QuestionService {
   getQuestion(id: number): Observable<Question> {
     return this.http.get<Question>(this.questionsUrl + '/' + id);
   }
+
+  updateQuestion(question: Question): Observable<Question> {
+    let url = this.questionsUrl + '/' + question.id;
+    return this.http.put<Question>(url, question);
+  }
 }

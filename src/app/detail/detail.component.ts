@@ -37,7 +37,15 @@ export class DetailComponent implements OnInit {
     });
     this.question.choices[i].votes += 1;
     this.votingAllowed = false;
-    event.target.classList.add('voted');
+
+    event.target.textContent = 'Voting...';
+
+    this.questionService.updateQuestion(this.question)
+                        .subscribe(question => {
+                          event.target.classList.add('voted');
+                          event.target.textContent = 'Voted';
+                        });
+
   }
 
   goBack() {
